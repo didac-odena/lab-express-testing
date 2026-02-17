@@ -49,7 +49,9 @@ lab-express-testing/
 │   ├── db.config.js                # Conexión a MongoDB (usa BDD _test en tests)
 │   └── routes.config.js            # Definición de rutas
 ├── controllers/
-│   └── movie.controllers.js        # Controladores CRUD
+│   └── movie.controllers.js        # Controladores CRUD (sin try/catch)
+├── middlewares/
+│   └── errors.middleware.js        # Middleware centralizado de errores
 ├── models/
 │   └── movie.model.js              # Esquema y modelo de Movie
 └── tests/
@@ -75,6 +77,16 @@ Para ejecutar en modo watch (re-ejecuta al guardar cambios):
 npm run test:watch
 ```
 
+### Comprobar cobertura (coverage)
+
+Para verificar qué porcentaje de tu código está cubierto por los tests:
+
+```bash
+npm run test:coverage
+```
+
+Esto generará un informe con el porcentaje de cobertura por fichero. Asegúrate de alcanzar al menos un **80%** de cobertura en los controladores (`controllers/movie.controllers.js`).
+
 ---
 
 ## Iteraciones
@@ -85,9 +97,9 @@ Implementa los tests del bloque `POST /api/movies`:
 
 1. **Crear una película correctamente**: Envía un POST con datos válidos, verifica status `201` y que el body contiene los datos enviados y un `_id`. Comprueba también que la película se guardó en la base de datos usando `Movie.findById()`.
 
-2. **Error si falta el título**: Envía un POST sin `title`, verifica status `400` y que hay un mensaje de error.
+2. **Error si falta el título**: Envía un POST sin `title`, verifica status `400` y que el body contiene los errores de validación de Mongoose (ej: `response.body.title`).
 
-3. **Error si falta el director**: Envía un POST sin `director`, verifica status `400` y que hay un mensaje de error.
+3. **Error si falta el director**: Envía un POST sin `director`, verifica status `400` y que el body contiene los errores de validación.
 
 **Pista - Patrón básico con Supertest:**
 
@@ -177,6 +189,7 @@ Cuando todos los tests estén implementados, deberías ver algo similar a:
 | ------------------------------- | ----------------------------------------------------------------------------------- |
 | **`export default app`**        | Exportamos la app para que Supertest la use sin levantar el servidor                |
 | **`NODE_ENV=test`**             | Usa la BDD `moviesdb_test` para no contaminar datos reales                          |
+| **Error middleware**             | Centraliza el manejo de errores: ValidationError (400), http-errors (status), CastError (404) |
 | **`request(app)`**              | Supertest simula peticiones HTTP sin necesidad de `app.listen()`                    |
 | **`.send(data)`**               | Envía un body JSON en la petición                                                   |
 | **`.expect(statusCode)`**       | Verifica el código de estado HTTP de la respuesta                                   |

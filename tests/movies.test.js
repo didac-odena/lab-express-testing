@@ -18,13 +18,13 @@ describe("API de Movies - CRUD completo", () => {
     it("debería devolver 400 si falta el título", async () => {
       // TODO: Enviar un POST sin el campo "title"
       // Verificar que la respuesta tiene status 400
-      // Verificar que hay un mensaje de error
+      // Verificar que el body contiene errores de validación (ej: response.body.title)
     });
 
     it("debería devolver 400 si falta el director", async () => {
       // TODO: Enviar un POST sin el campo "director"
       // Verificar que la respuesta tiene status 400
-      // Verificar que hay un mensaje de error
+      // Verificar que el body contiene errores de validación (ej: response.body.director)
     });
 
     // BONUS: Escribe un test que verifique que el rating no puede ser mayor a 10
