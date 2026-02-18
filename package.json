@@ -5,12 +5,12 @@
   "description": "Lab: Testing de una API Express con Vitest y Supertest",
   "scripts": {
     "dev": "node --watch app.js",
-    "test": "NODE_ENV=test vitest run",
-    "test:watch": "NODE_ENV=test vitest",
-    "test:coverage": "NODE_ENV=test vitest run --coverage"
+    "test": "set NODE_ENV=test&& vitest run",
+    "test:watch": "set NODE_ENV=test&& vitest",
+    "test:coverage": "set NODE_ENV=test&& vitest run --coverage"
   },
   "dependencies": {
-    "express": "^4.21.2",
+    "express": "^5.0.0",
     "http-errors": "^2.0.1",
     "mongoose": "^8.12.1",
     "morgan": "^1.10.0"
